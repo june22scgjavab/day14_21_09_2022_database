@@ -1,0 +1,201 @@
+CREATE TABLE employeedetails(
+         empid VARCHAR2(5) PRIMARY KEY,
+         empname VARCHAR2(20) NOT NULL,
+         desig VARCHAR2(20) CHECK (desig IN('Mgr','AsstMgr','VP')),
+         dept VARCHAR2(20) CHECK (dept IN('Sales','Mkt','HR')),
+         basic INTEGER check (basic>=10000 AND basic<=50000),
+         doj DATE
+         );
+
+
+   INSERT INTO employeedetails VALUES('E0001','Rajesh','Mgr','Sales',30000,'12-nov-2010');
+   INSERT INTO employeedetails VALUES('E0002','Raj','Mgr','Sales',29000,null);
+   INSERT INTO employeedetails VALUES('E0003','Rohit','AsstMgr','Sales',20000,'14-jul-1980');
+   INSERT INTO employeedetails VALUES('E0004','Amit','Mgr','Sales',30000,null);
+   INSERT INTO employeedetails VALUES('E0005','Mohan','Mgr','Sales',29000,null);
+   INSERT INTO employeedetails VALUES('E0006','Surender','VP','Mkt',20000,'21-mar-1999');
+
+----------------------------------------------------------------------------------------------------------------------------------
+Example of single row function
+       SELECT upper(empname) FROM employeedetails;
+       SELECT empid,upper(empname) NAME,desig,dept,basic FROM employeedetails;
+
+Example of multiple rows function
+      SELECT count(empid) FROM employeedetails; 
+
+SELECT City, LENGTH(City) "LENGTH",  LOWER(City) "LOWERCASE", UPPER(City) "UPPERCASE" FROM Weather
+WHERE LENGTH(city)=6;
+---------------------------------------------------------------------------------------------------------------------------------
+SELECT City, Country, CONCAT(City, Country) "CONCAT", City || Country "ConcatByOperator", CONCAT(CONCAT(City, ', '), Country) "NestedConcat" FROM Weather;
+----------------------------------------------------------------------
+SELECT City, Country, CONCAT(City, Country) "CONCAT" FROM Weather;
+---------------------------------------------------------------
+SELECT City, Country, City || Country "ConcatByOperator" FROM Weather;
+--------------------------------------------------------------------
+SELECT City, Country, CONCAT(CONCAT(City, ', '), Country) "NestedConcat" FROM Weather;
+                                London,
+                                London,UK
+------------------------------------------------------------------------------
+Aggregate functions
+
+1) COUNT
+2) SUM
+3) MIN
+4) MAX
+5) AVG
+
+
+
+SELECT TO_CHAR(1210.73, '9999.9') FROM DUAL
+Result: ' 1210.7'
+
+SELECT TO_CHAR(-1210.73, '9999.9') FROM DUAL
+Result: '-1210.7'
+
+SELECT TO_CHAR(1210.73, '9,999.99') FROM DUAL
+Result: ' 1,210.73'
+
+SELECT TO_CHAR(1210.73, '$9,999.00') FROM DUAL
+Result: ' $1,210.73'
+
+SELECT TO_CHAR(21, '000099') FROM DUAL
+Result: ' 000021'
+
+-------------------------------------------------------------------------------------------------
+YEAR	Year, spelled out
+YYYY	4-digit year
+YYY
+YY
+Y	Last 3, 2, or 1 digit(s) of year.
+
+
+Q	Quarter of year (1, 2, 3, 4; JAN-MAR = 1).
+MM	Month (01-12; JAN = 01).
+MON	Abbreviated name of month.
+MONTH	Name of month, padded with blanks to length of 9 characters.
+RM	Roman numeral month (I-XII; JAN = I).
+WW	Week of year (1-53) where week 1 starts on the first day of the year and continues to the seventh day of the year.
+W	Week of month (1-5) where week 1 starts on the first day of the month and ends on the seventh.
+
+D	Day of week (1-7).
+DAY	Name of day.
+DD	Day of month (1-31).
+DDD	Day of year (1-366).
+DY	Abbreviated name of day.
+
+HH	Hour of day (1-12).
+HH12	Hour of day (1-12).
+HH24	Hour of day (0-23).
+MI	Minute (0-59).
+SS	Second (0-59).
+
+The following are date examples for the TO_CHAR function.
+
+SELECT TO_CHAR(sysdate, 'yyyy/mm/dd') FROM dual;
+Result: '2003/07/09'
+
+SELECT TO_CHAR(sysdate, 'yyyy-mm-dd') FROM dual;
+Result: '2003-07-09'
+
+SELECT TO_CHAR(sysdate, 'Month DD, YYYY') FROM dual;
+Result: 'July 09, 2003'
+
+
+SELECT TO_CHAR(sysdate, 'MON DDth, YYYY') FROM dual;
+Result: 'JUL 09TH, 2003'
+
+select ename,to_char(doj,'MONTH-dd-yyyy') date_of_joining from employee
+
+You will notice that in some TO_CHAR function examples, the format_mask parameter begins with "FM". This means that zeros and blanks are suppressed. This can be seen in the examples below.
+
+TO_CHAR(sysdate, 'FMMonth DD, YYYY')
+Result: 'July 9, 2003'
+
+TO_CHAR(sysdate, 'FMMON DDth, YYYY')
+Result: 'JUL 9TH, 2003'
+
+TO_CHAR(sysdate, 'FMMon ddth, YYYY')
+Result: 'Jul 9th, 2003'
+
+----------------------------------
+  dd-MON-yy
+  INSERT INTO employeedetails VALUES('E0001','Ram','12-jan-2020','mgr','sales',12000);
+  INSERT INTO employeedetails VALUES('E0002','Shayam',TO_DATE('2020/01/12','yyyy/mm/dd'),'mgr','sales',15000);
+  INSERT INTO employeedetails VALUES('E0003','Shayam',TO_DATE('20200112','yyyymmdd'),'mgr','sales',15000);
+
+SELECT TO_DATE('2003/07/09', 'yyyy/mm/dd') FROM dual;
+Result: date value of July 9, 2003
+
+SELECT TO_DATE('07092003', 'MMDDYYYY') FROM dual;
+Result: date value of July 9, 2003
+
+SELECT TO_DATE('20020315', 'yyyymmdd') FROM dual;
+Result: date value of Mar 15, 2002
+You could use the TO_DATE function with the dual table as follows:
+
+SELECT TO_DATE('2015/05/15 8:30:25', 'YYYY/MM/DD HH:MI:SS')
+FROM dual;
+--------------------------------------------------------------------------------------------
+SELECT TO_NUMBER('1210.73', '9999.99') FROM dual
+Result: 1210.73
+
+SELECT TO_NUMBER('546', '999') FROM dual
+Result: 546
+
+SELECT TO_NUMBER('23', '99') FROM dual
+Result: 23
+-------------------------------------------------------------------------------------
+
+
+Description
+The Oracle/PLSQL CEIL function returns the smallest integer value that is greater than or equal to a number.
+
+CEIL(32.65)
+Result: 33
+
+CEIL(32.1)
+Result: 33
+
+CEIL(32)
+Result: 32
+
+CEIL(-32.65)
+Result: -32
+
+CEIL(-32)
+Result: -32
+
+-------------------------------------------------------------------
+Description
+The Oracle/PLSQL FLOOR function returns the largest integer value that is equal to or less than a number.
+
+FLOOR(5.9)
+Result: 5
+
+FLOOR(34.29)
+Result: 34
+
+FLOOR(-5.9)
+Result: -6
+-------------------------------------
+
+Create a table where default value for the customer's city is Delhi.
+
+
+  CREATE table customer(
+    customerid VARCHAR2(5) PRIMARY KEY,
+    name VARCHAR2(20) NOT NULL,
+    city VARCHAR2(20) default 'Delhi'
+  );
+
+  INSERT INTO customer(customerid,name) VALUES('C0001','Raju');
+  INSERT INTO customer(customerid,name,city) VALUES('C0002','Raju','Chennai');
+  INSERT INTO customer VALUES('C0003','Raju','Bangalore');
+--------------------------------------------------------------------------------------------------
+  
+  UPDATE customer SET city='Hyderabad' WHERE customerid='C0001';
+--------------------------------------------------------------------------------------------------- 
+  
+
+INSERT into employee VALUES('E0001','Akash','12-Jan-2010');
+INSERT into employee VALUES('E0002','Akash',to_date('12-01-2010','dd-mm-yyyy'));
